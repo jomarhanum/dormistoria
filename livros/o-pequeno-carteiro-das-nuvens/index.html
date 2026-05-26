@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -11,8 +10,8 @@
 <meta property="og:type"        content="website"/>
 <meta name="twitter:card"       content="summary_large_image"/>
 <meta name="twitter:image"      content="capa.png"/>
-<link rel="icon"            type="image/png" href="../../../../favicon.png"/>
-<link rel="apple-touch-icon"               href="../../../../favicon.png"/>
+<link rel="icon"            type="image/png" href="../../favicon.png"/>
+<link rel="apple-touch-icon"               href="../../favicon.png"/>
 <title>O Pequeno Carteiro das Nuvens — Dormistória</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
@@ -2193,28 +2192,139 @@
   <ellipse cx="180" cy="860" rx="100" ry="130" fill="#0E0C22"/>
   <ellipse cx="310" cy="855" rx="95" ry="125" fill="#0E0C22"/>
   <ellipse cx="415" cy="845" rx="80" ry="110" fill="#0E0C22"/>
-  <!-- final title/end text block -->
-  <rect x="50" y="570" width="330" height="180" rx="20" fill="rgba(255,248,220,0.1)"/>
-  <text x="215" y="630" text-anchor="middle" font-size="15" fill="#C8AAEE" font-family="Nunito,sans-serif" font-weight="600">E Pip fechou os olhinhos contente,</text>
-  <text x="215" y="656" text-anchor="middle" font-size="15" fill="#C8AAEE" font-family="Nunito,sans-serif" font-weight="600">sabendo que amanhã teria mais cartas,</text>
-  <text x="215" y="682" text-anchor="middle" font-size="15" fill="#C8AAEE" font-family="Nunito,sans-serif" font-weight="600">mais amigos, mais sorrisos.</text>
-  <text x="215" y="720" text-anchor="middle" font-size="22" fill="#FFE8A0" font-family="Fredoka One,cursive">E isso era tudo de bom.</text>
-  <!-- decorative stars -->
-  <text x="90" y="738" font-size="14" fill="#FFE8A0" opacity="0.7" text-anchor="middle">✦</text>
-  <text x="215" y="748" font-size="14" fill="#FFE8A0" opacity="0.7" text-anchor="middle">✦</text>
-  <text x="340" y="738" font-size="14" fill="#FFE8A0" opacity="0.7" text-anchor="middle">✦</text>
 </svg>
-<!-- Botão Início -->
-<div style="position:absolute;bottom:44px;left:50%;transform:translateX(-50%);z-index:10;">
+<div class="text-overlay" style="bottom:80px">
+  <div class="bubble-dark" style="text-align:center">
+    <p>E Pip fechou os olhinhos contente, sabendo que amanhã teria mais cartas, mais amigos, mais sorrisos.</p>
+    <p style="font-family:'Fredoka One',cursive;font-size:clamp(20px,5.5vw,26px);color:#FFE8A0;margin-top:12px;">E isso era tudo de bom.</p>
+    <p style="font-size:clamp(14px,3.5vw,18px);margin-top:10px;letter-spacing:0.15em;color:rgba(255,232,160,0.6);">✦ &nbsp; ✦ &nbsp; ✦</p>
+  </div>
+</div>
+<!-- Botão Início removido daqui — foi para a página 29 -->
+</div>
+
+<!-- PAGE 29 — CTA -->
+<div class="page" id="page-29">
+<svg viewBox="0 0 430 932" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%">
+  <defs>
+    <radialGradient id="bgCTA" cx="50%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#2A2058"/>
+      <stop offset="100%" stop-color="#0C0A28"/>
+    </radialGradient>
+  </defs>
+  <rect width="430" height="932" fill="url(#bgCTA)"/>
+  <!-- stars -->
+  <circle cx="40" cy="80" r="1.5" fill="#FFFAE0" opacity="0.7"/>
+  <circle cx="110" cy="50" r="1" fill="#FFFAE0" opacity="0.6"/>
+  <circle cx="200" cy="35" r="1.8" fill="#FFFAE0" opacity="0.8"/>
+  <circle cx="310" cy="65" r="1.2" fill="#FFFAE0" opacity="0.65"/>
+  <circle cx="395" cy="45" r="1.5" fill="#FFFAE0" opacity="0.7"/>
+  <circle cx="60" cy="170" r="1" fill="#FFFAE0" opacity="0.5"/>
+  <circle cx="380" cy="155" r="1.5" fill="#FFFAE0" opacity="0.6"/>
+  <circle cx="170" cy="110" r="1" fill="#FFFAE0" opacity="0.5"/>
+  <circle cx="260" cy="90" r="1.2" fill="#FFFAE0" opacity="0.6"/>
+  <circle cx="420" cy="200" r="1" fill="#FFFAE0" opacity="0.5"/>
+  <circle cx="22" cy="300" r="1.2" fill="#FFFAE0" opacity="0.45"/>
+  <circle cx="408" cy="280" r="1" fill="#FFFAE0" opacity="0.5"/>
+  <!-- soft moon glow top -->
+  <ellipse cx="215" cy="0" rx="200" ry="120" fill="#C8AAEE" opacity="0.06"/>
+  <!-- decorative divider line -->
+  <line x1="60" y1="192" x2="370" y2="192" stroke="rgba(200,170,238,0.25)" stroke-width="1"/>
+  <line x1="60" y1="500" x2="370" y2="500" stroke="rgba(200,170,238,0.2)" stroke-width="1"/>
+  <line x1="60" y1="660" x2="370" y2="660" stroke="rgba(200,170,238,0.2)" stroke-width="1"/>
+</svg>
+
+<!-- BOTÃO INÍCIO — topo esquerdo discreto -->
+<div style="position:absolute;top:18px;left:16px;z-index:20;">
   <button onclick="showPage(0,-1)" style="
-    font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;
-    color:#2A1F3D;background:rgba(255,232,160,0.92);border:none;
-    border-radius:50px;padding:12px 32px;cursor:pointer;
-    letter-spacing:0.04em;box-shadow:0 4px 18px rgba(0,0,0,0.35);
-    display:flex;align-items:center;gap:8px;">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A1F3D" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;
+    color:rgba(200,170,238,0.8);background:rgba(255,255,255,0.08);
+    border:1px solid rgba(200,170,238,0.3);border-radius:50px;
+    padding:7px 14px;cursor:pointer;
+    display:flex;align-items:center;gap:5px;
+    backdrop-filter:blur(4px);">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(200,170,238,0.8)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     Início
   </button>
+</div>
+
+<!-- CONTEÚDO DA PÁGINA -->
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:70px 28px 28px;overflow:hidden;">
+
+  <!-- BLOCO 1 — Gancho emocional -->
+  <div style="text-align:center;margin-bottom:22px;">
+    <p style="font-family:'Fredoka One',cursive;font-size:clamp(24px,6.5vw,32px);color:#FFE8A0;line-height:1.3;text-shadow:0 2px 16px rgba(255,200,80,0.4);">Se esse momento<br>foi especial…</p>
+    <p style="font-family:'Nunito',sans-serif;font-size:clamp(17px,4.5vw,21px);color:#E0D0FF;font-weight:700;margin-top:8px;line-height:1.5;">imagine ter isso<br><em style="color:#FFE8A0;font-style:normal;">todo dia.</em></p>
+  </div>
+
+  <!-- BLOCO 2 — O que é -->
+  <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:14px 18px;margin-bottom:20px;width:100%;text-align:center;">
+    <p style="font-family:'Nunito',sans-serif;font-size:clamp(14px,3.8vw,17px);color:#C8AAEE;font-weight:700;line-height:1.6;">Uma história nova direto no seu WhatsApp,<br>toda noite, pronta para ler.<br><span style="color:rgba(200,170,238,0.65);font-weight:600;font-size:0.88em;">Sem preparação. Sem improviso.<br>Só você, seu filho e uma história encantadora.</span></p>
+  </div>
+
+  <!-- BLOCO 3 — Prévia livro 002 -->
+  <a href="https://dormistoria.com.br" target="_blank" style="text-decoration:none;width:100%;display:block;margin-bottom:20px;">
+  <div style="background:rgba(96,192,232,0.1);border:1px solid rgba(96,192,232,0.35);border-radius:18px;padding:14px 16px;display:flex;gap:14px;align-items:center;cursor:pointer;transition:background 0.2s;">
+    <!-- mini capa livro 002 representada em SVG inline -->
+    <div style="flex-shrink:0;width:72px;height:90px;border-radius:10px;overflow:hidden;background:linear-gradient(160deg,#0A4A6A,#040C18);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.4);">
+      <svg viewBox="0 0 72 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+        <!-- mini nuvem chuva -->
+        <ellipse cx="36" cy="22" rx="24" ry="14" fill="#5090B0" opacity="0.9"/>
+        <ellipse cx="20" cy="27" rx="14" ry="10" fill="#4A88A8" opacity="0.9"/>
+        <ellipse cx="54" cy="26" rx="15" ry="10" fill="#4A88A8" opacity="0.9"/>
+        <!-- chuva -->
+        <ellipse cx="24" cy="42" rx="3" ry="6" fill="#90D4F0" opacity="0.8"/>
+        <ellipse cx="36" cy="44" rx="3" ry="6" fill="#90D4F0" opacity="0.8"/>
+        <ellipse cx="48" cy="42" rx="3" ry="6" fill="#90D4F0" opacity="0.8"/>
+        <!-- gotinha gota -->
+        <path d="M36,52 Q30,60 30,65 Q30,71 36,73 Q42,71 42,65 Q42,60 36,52Z" fill="#60C0E8"/>
+        <ellipse cx="33" cy="63" rx="2.5" ry="3" fill="#1A5A7A"/>
+        <ellipse cx="39" cy="63" rx="2.5" ry="3" fill="#1A5A7A"/>
+        <path d="M33 68 Q36 72 39 68" stroke="#1A5A7A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <!-- title mini -->
+        <text x="36" y="83" text-anchor="middle" font-size="5.5" fill="#C0EEFF" font-family="Nunito,sans-serif" font-weight="700">A Gotinha Gota</text>
+      </svg>
+    </div>
+    <div style="flex:1;">
+      <p style="font-family:'Nunito',sans-serif;font-size:clamp(11px,3vw,13px);color:#60C0E8;font-weight:800;margin-bottom:4px;letter-spacing:0.03em;">AMANHÃ NA DORMISTÓRIA 💧</p>
+      <p style="font-family:'Fredoka One',cursive;font-size:clamp(14px,3.8vw,17px);color:#C0EEFF;line-height:1.2;margin-bottom:6px;">A Gotinha Gota</p>
+      <p style="font-family:'Nunito',sans-serif;font-size:clamp(11px,3vw,13px);color:rgba(192,238,255,0.7);font-weight:600;line-height:1.5;font-style:italic;">"Era uma manhã bem pequenininha quando Gota escorregou da nuvem sem querer…"</p>
+    </div>
+  </div>
+  </a>
+
+  <!-- BLOCO 4 — Depoimentos -->
+  <div style="width:100%;margin-bottom:20px;display:flex;flex-direction:column;gap:10px;">
+    <div style="background:rgba(255,255,255,0.06);border-radius:14px;padding:12px 16px;border-left:3px solid rgba(255,232,160,0.6);">
+      <p style="font-family:'Nunito',sans-serif;font-size:clamp(13px,3.4vw,15px);color:#E8E0FF;font-weight:700;line-height:1.5;font-style:italic;">"Comecei a ler e meu filho apagou antes do final da história"</p>
+      <p style="font-family:'Nunito',sans-serif;font-size:clamp(11px,2.8vw,13px);color:rgba(200,170,238,0.65);font-weight:600;margin-top:4px;">— Mariana P. 💛</p>
+    </div>
+    <div style="background:rgba(255,255,255,0.06);border-radius:14px;padding:12px 16px;border-left:3px solid rgba(255,232,160,0.6);">
+      <p style="font-family:'Nunito',sans-serif;font-size:clamp(13px,3.4vw,15px);color:#E8E0FF;font-weight:700;line-height:1.5;font-style:italic;">"Virou nosso ritual. Agora ele até pede a Dormistória"</p>
+      <p style="font-family:'Nunito',sans-serif;font-size:clamp(11px,2.8vw,13px);color:rgba(200,170,238,0.65);font-weight:600;margin-top:4px;">— Rafael S. 💛</p>
+    </div>
+  </div>
+
+  <!-- BLOCO 5 — CTA -->
+  <div style="width:100%;text-align:center;">
+    <a href="https://dormistoria.com.br" target="_blank" style="
+      display:block;
+      font-family:'Fredoka One',cursive;
+      font-size:clamp(18px,5vw,22px);
+      color:#2A1F3D;
+      background:linear-gradient(135deg,#FFE8A0,#FFD060);
+      border-radius:60px;
+      padding:16px 24px;
+      text-decoration:none;
+      text-align:center;
+      box-shadow:0 6px 28px rgba(255,200,60,0.45);
+      letter-spacing:0.02em;
+      margin-bottom:12px;">
+      Quero uma história nova todo dia →
+    </a>
+    <p style="font-family:'Nunito',sans-serif;font-size:clamp(11px,2.8vw,13px);color:rgba(200,170,238,0.55);font-weight:600;">365 histórias · direto no WhatsApp · 7 dias de garantia</p>
+  </div>
+
 </div>
 </div>
 
@@ -2234,7 +2344,7 @@
 
 <!-- Download button -->
 <script>
-const TOTAL = 29;
+const TOTAL = 30;
 const BOOK_TITLE = 'O Pequeno Carteiro das Nuvens';
 let current = 0;
 let startX = 0;
