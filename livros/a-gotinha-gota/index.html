@@ -10,8 +10,8 @@
 <meta property="og:type"        content="website"/>
 <meta name="twitter:card"       content="summary_large_image"/>
 <meta name="twitter:image"      content="capa.png"/>
-<link rel="icon"            type="image/png" href="../../../../favicon.png"/>
-<link rel="apple-touch-icon"               href="../../../../favicon.png"/>
+<link rel="icon"            type="image/png" href="../../favicon.png"/>
+<link rel="apple-touch-icon"               href="../../favicon.png"/>
 <title>A Gotinha Gota — Dormistória</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
@@ -1121,18 +1121,14 @@
   <text x="275" y="290" font-size="14" fill="#C0EEFF" opacity="0.7">✦</text>
   <text x="148" y="375" font-size="12" fill="#C0EEFF" opacity="0.7">✦</text>
   <text x="280" y="370" font-size="13" fill="#C0EEFF" opacity="0.65">✦</text>
-  <!-- title of end text area -->
-  <rect x="30" y="650" width="370" height="180" rx="22" fill="rgba(0,30,70,0.4)"/>
-  <text x="215" y="700" text-anchor="middle" font-size="17" fill="#A0D4F0" font-family="Nunito,sans-serif" font-weight="700">E Gota entendeu uma coisa</text>
-  <text x="215" y="724" text-anchor="middle" font-size="17" fill="#A0D4F0" font-family="Nunito,sans-serif" font-weight="700">muito importante naquele dia:</text>
-  <text x="215" y="766" text-anchor="middle" font-size="22" fill="#C0EEFF" font-family="Fredoka One,cursive">viajar é lindo,</text>
-  <text x="215" y="796" text-anchor="middle" font-size="22" fill="#C0EEFF" font-family="Fredoka One,cursive">mas voltar pra casa</text>
-  <text x="215" y="826" text-anchor="middle" font-size="22" fill="#C0EEFF" font-family="Fredoka One,cursive">é ainda mais gostoso.</text>
-  <!-- stars decorative -->
-  <text x="88" y="848" font-size="13" fill="#C0EEFF" opacity="0.7" text-anchor="middle">✦</text>
-  <text x="215" y="855" font-size="13" fill="#C0EEFF" opacity="0.7" text-anchor="middle">✦</text>
-  <text x="342" y="848" font-size="13" fill="#C0EEFF" opacity="0.7" text-anchor="middle">✦</text>
 </svg>
+<div class="text-overlay" style="bottom:100px">
+  <div class="bubble-dark" style="text-align:center">
+    <p>E Gota entendeu uma coisa muito importante naquele dia:</p>
+    <p style="font-family:'Fredoka One',cursive;font-size:clamp(20px,5.5vw,26px);color:#C0EEFF;margin-top:10px;">viajar é lindo,<br>mas voltar pra casa<br>é ainda mais gostoso.</p>
+    <p style="font-size:clamp(14px,3.5vw,18px);margin-top:10px;letter-spacing:0.15em;color:rgba(192,238,255,0.5);">✦ &nbsp; ✦ &nbsp; ✦</p>
+  </div>
+</div>
 <!-- Botão Início -->
 <div style="position:absolute;bottom:44px;left:50%;transform:translateX(-50%);z-index:10;">
   <button onclick="showPage(0,-1)" style="
@@ -1171,6 +1167,7 @@ document.querySelectorAll('.page').forEach((p,i)=>{
   if(i===0){p.style.visibility='visible';p.style.opacity='1';p.style.transform='translateX(0)';p.style.pointerEvents='all';p.classList.add('active');}
   else{p.style.visibility='hidden';p.style.opacity='0';p.style.transform='translateX(0)';p.style.pointerEvents='none';p.classList.remove('active');}
 });
+updateDots(); // estado inicial das setas
 
 function getPage(n){return document.getElementById('page-'+n)}
 
@@ -1202,7 +1199,13 @@ function showPage(n,dir){
   },dur+20);
 }
 
-function updateDots(){document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));}
+function updateDots(){
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+  const tapPrev = document.querySelector('.tap-prev');
+  const tapNext = document.querySelector('.tap-next');
+  tapPrev.style.display = current === 0 ? 'none' : 'flex';
+  tapNext.style.display = current === TOTAL-1 ? 'none' : 'flex';
+}
 
 const dotContainer=document.getElementById('dots');
 for(let i=0;i<TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');dotContainer.appendChild(d);}
