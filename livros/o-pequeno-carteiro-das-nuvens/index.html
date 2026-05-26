@@ -2249,7 +2249,7 @@
 </div>
 
 <!-- CONTEÚDO DA PÁGINA -->
-<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:70px 28px 28px;overflow:hidden;">
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:70px 28px 28px;overflow-y:auto;-webkit-overflow-scrolling:touch;">
 
   <!-- BLOCO 1 — Gancho emocional -->
   <div style="text-align:center;margin-bottom:22px;">
@@ -2367,6 +2367,7 @@ document.querySelectorAll('.page').forEach((p, i) => {
   }
   p.style.pointerEvents = i === 0 ? 'all' : 'none';
 });
+updateDots(); // aplica estado inicial das setas
 
 function getPage(n){ return document.getElementById('page-'+n) }
 
@@ -2427,6 +2428,15 @@ function showPage(n, dir){
 function updateDots(){
   const dots = document.querySelectorAll('.dot');
   dots.forEach((d,i)=>{ d.classList.toggle('active', i===current) });
+  // Seta esquerda: oculta na capa (0) e na última página (29)
+  const tapPrev = document.querySelector('.tap-prev');
+  const tapNext = document.querySelector('.tap-next');
+  const isFirst = current === 0;
+  const isLast  = current === TOTAL - 1;
+  tapPrev.style.display = (isFirst || isLast) ? 'none' : 'flex';
+  tapNext.style.display = isLast ? 'none' : 'flex';
+  // Dots: ocultos na última página
+  document.getElementById('dots').style.display = isLast ? 'none' : 'flex';
 }
 
 // Build dots
@@ -2462,7 +2472,8 @@ book.addEventListener('touchend', e=>{
   if(!dragging) return;
   const dx = e.changedTouches[0].clientX - startX;
   const dy = e.changedTouches[0].clientY - startY;
-  if(!animating && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2){
+  // Última página: sem swipe — permite scroll vertical do CTA
+  if(!animating && current < TOTAL-1 && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2){
     if(dx < 0 && current < TOTAL-1) showPage(current+1, 1);
     else if(dx > 0 && current > 0) showPage(current-1, -1);
   }
