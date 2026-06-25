@@ -1,0 +1,1091 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta property="og:title"       content="Tito e o Jardim Secreto — Dormistória"/>
+<meta property="og:description" content="Um pequeno texugo descobre que a coragem pode ser bem pequena 🍂"/>
+<meta property="og:image"       content="capa.png"/>
+<meta property="og:type"        content="website"/>
+<meta name="twitter:card"       content="summary_large_image"/>
+<meta name="twitter:image"      content="capa.png"/>
+<link rel="icon"            type="image/png" href="../../favicon.png"/>
+<link rel="apple-touch-icon"               href="../../favicon.png"/>
+<title>Tito e o Jardim Secreto — Dormistória</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  :root{
+    --text-dark:#3A2810;
+    --text-mid:#5A4020;
+    --white:#FFFFFF;
+  }
+  html,body{
+    width:100%;height:100%;
+    overflow:hidden;
+    background:#2A1F0F;
+    font-family:'Nunito',sans-serif;
+  }
+  #app{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+  #book{
+    position:relative;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    border-radius:0;
+    box-shadow:none;
+  }
+  @media(min-width:500px){
+    #book{max-width:430px;max-height:932px;border-radius:24px;box-shadow:0 0 60px rgba(0,0,0,0.5);}
+  }
+  .page{
+    position:absolute;inset:0;width:100%;height:100%;
+    display:flex;flex-direction:column;
+    opacity:0;pointer-events:none;overflow:hidden;
+    transform:translateX(0);visibility:hidden;
+  }
+  .page.active{opacity:1;pointer-events:all;transform:translateX(0);visibility:visible;}
+  .illustration{flex-shrink:0;width:100%;position:relative;overflow:hidden}
+  .illustration svg{width:100%;height:100%;display:block}
+  .text-box{
+    padding:20px 24px 24px;flex:1;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .text-box p{
+    font-family:'Nunito',sans-serif;
+    font-size:clamp(19px,5vw,24px);
+    line-height:1.75;color:var(--text-dark);font-weight:700;
+  }
+  .text-box p+p{margin-top:12px}
+  .text-box p em{font-style:italic;color:#A0601A}
+  .text-overlay{position:absolute;bottom:0;left:0;right:0;padding:16px 20px 28px;}
+  .text-overlay p{
+    font-family:'Nunito',sans-serif;
+    font-size:clamp(18px,4.8vw,23px);
+    line-height:1.75;font-weight:700;text-align:center;
+  }
+  .bubble{background:rgba(255,250,240,0.93);border-radius:20px;padding:16px 20px;backdrop-filter:blur(6px);}
+  .bubble p{font-size:clamp(18px,4.8vw,23px)!important;line-height:1.75!important;color:var(--text-dark);font-weight:700;}
+  .bubble-dark{background:rgba(40,28,15,0.80);border-radius:20px;padding:16px 20px;}
+  .bubble-dark p{color:#F5E8D0;font-weight:700;font-size:clamp(18px,4.8vw,23px)!important;line-height:1.75!important;}
+  .cover-content{
+    position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;padding:30px 24px;text-align:center;
+  }
+  #dots{
+    position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+    display:flex;gap:5px;z-index:100;opacity:0.5;pointer-events:none;
+  }
+  .dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.4);transition:background 0.3s,transform 0.3s}
+  .dot.active{background:rgba(255,255,255,0.9);transform:scale(1.3)}
+  .tap-prev,.tap-next{
+    position:fixed;top:50%;transform:translateY(-50%);
+    width:48px;height:64px;z-index:50;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .tap-prev{left:8px}.tap-next{right:8px}
+  .tap-arrow{
+    width:44px;height:44px;background:rgba(255,255,255,0.55);
+    border:2px solid rgba(255,255,255,0.8);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    transition:background 0.15s,transform 0.1s;
+    box-shadow:0 2px 10px rgba(0,0,0,0.25);
+  }
+  .tap-prev:active .tap-arrow,.tap-next:active .tap-arrow{background:rgba(255,255,255,0.85);transform:scale(0.92)}
+  .tap-arrow svg{width:22px;height:22px;stroke:#2A1F0F;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<div id="app"><div id="book">
+
+<!-- CAPA -->
+<div class="page active" id="page-0">
+<svg viewBox="0 0 430 932" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%">
+  <defs>
+    <radialGradient id="bgC" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#5A3818"/>
+      <stop offset="60%" stop-color="#2A1A0A"/>
+      <stop offset="100%" stop-color="#0E0804"/>
+    </radialGradient>
+  </defs>
+  <rect width="430" height="932" fill="url(#bgC)"/>
+  <!-- fireflies/stars -->
+  <circle cx="40" cy="60" r="1.8" fill="#FFE8A0" opacity="0.85"/>
+  <circle cx="120" cy="35" r="1.2" fill="#FFE8A0" opacity="0.7"/>
+  <circle cx="200" cy="22" r="2" fill="#FFD080" opacity="0.9"/>
+  <circle cx="310" cy="50" r="1.5" fill="#FFE8A0" opacity="0.75"/>
+  <circle cx="390" cy="30" r="1.8" fill="#FFD080" opacity="0.8"/>
+  <circle cx="60" cy="140" r="1.2" fill="#FFE8A0" opacity="0.6"/>
+  <circle cx="360" cy="115" r="1.5" fill="#FFD080" opacity="0.7"/>
+  <circle cx="170" cy="90" r="1" fill="#FFE8A0" opacity="0.55"/>
+  <circle cx="280" cy="70" r="1.3" fill="#FFD080" opacity="0.65"/>
+  <!-- big tree silhouette -->
+  <rect x="180" y="280" width="70" height="280" fill="#3A2810"/>
+  <ellipse cx="215" cy="240" rx="170" ry="130" fill="#2A4A1A"/>
+  <ellipse cx="100" cy="280" rx="100" ry="85" fill="#3A5A20"/>
+  <ellipse cx="330" cy="270" rx="105" ry="88" fill="#244A18"/>
+  <ellipse cx="215" cy="200" rx="120" ry="80" fill="#3A5A22"/>
+  <!-- fence in foreground -->
+  <rect x="20" y="540" width="10" height="90" fill="#6A4A28"/>
+  <rect x="70" y="535" width="10" height="95" fill="#6A4A28"/>
+  <rect x="120" y="540" width="10" height="90" fill="#6A4A28"/>
+  <rect x="300" y="540" width="10" height="90" fill="#6A4A28"/>
+  <rect x="350" y="535" width="10" height="95" fill="#6A4A28"/>
+  <rect x="400" y="540" width="10" height="90" fill="#6A4A28"/>
+  <rect x="15" y="560" width="400" height="10" fill="#5A3A20"/>
+  <!-- TITO the badger peeking from behind tree, big cute character -->
+  <!-- shadow -->
+  <ellipse cx="215" cy="700" rx="60" ry="16" fill="#1A1006" opacity="0.4"/>
+  <!-- body -->
+  <ellipse cx="215" cy="640" rx="48" ry="56" fill="#5A4A38"/>
+  <!-- belly lighter -->
+  <ellipse cx="215" cy="650" rx="30" ry="38" fill="#E8DCC8"/>
+  <!-- head -->
+  <ellipse cx="215" cy="555" rx="46" ry="42" fill="#5A4A38"/>
+  <!-- badger face stripe pattern -->
+  <path d="M180,520 Q215,505 250,520 L250,560 Q215,575 180,560Z" fill="#E8DCC8"/>
+  <!-- dark stripes over eyes -->
+  <ellipse cx="195" cy="540" rx="14" ry="22" fill="#3A2A18" transform="rotate(-8 195 540)"/>
+  <ellipse cx="235" cy="540" rx="14" ry="22" fill="#3A2A18" transform="rotate(8 235 540)"/>
+  <!-- ears -->
+  <circle cx="178" cy="515" r="16" fill="#5A4A38"/>
+  <circle cx="178" cy="515" r="10" fill="#4A3828"/>
+  <circle cx="252" cy="515" r="16" fill="#5A4A38"/>
+  <circle cx="252" cy="515" r="10" fill="#4A3828"/>
+  <!-- eyes - big and curious -->
+  <ellipse cx="200" cy="545" rx="7" ry="8" fill="#1A1006"/>
+  <ellipse cx="230" cy="545" rx="7" ry="8" fill="#1A1006"/>
+  <circle cx="203" cy="542" r="2.8" fill="#fff"/>
+  <circle cx="233" cy="542" r="2.8" fill="#fff"/>
+  <!-- nose -->
+  <ellipse cx="215" cy="565" rx="9" ry="7" fill="#1A1006"/>
+  <!-- gentle smile -->
+  <path d="M203 575 Q215 583 227 575" stroke="#3A2A18" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- cheeks -->
+  <circle cx="192" cy="568" r="7" fill="#FFB090" opacity="0.4"/>
+  <circle cx="238" cy="568" r="7" fill="#FFB090" opacity="0.4"/>
+  <!-- arms hugging knees, shy pose -->
+  <ellipse cx="178" cy="650" rx="20" ry="30" fill="#5A4A38" transform="rotate(15 178 650)"/>
+  <ellipse cx="252" cy="648" rx="20" ry="30" fill="#5A4A38" transform="rotate(-15 252 648)"/>
+  <!-- paws -->
+  <ellipse cx="170" cy="678" rx="12" ry="9" fill="#4A3828"/>
+  <ellipse cx="260" cy="676" rx="12" ry="9" fill="#4A3828"/>
+  <!-- tail -->
+  <ellipse cx="248" cy="690" rx="14" ry="20" fill="#5A4A38" transform="rotate(35 248 690)"/>
+  <!-- title bg soft -->
+  <rect x="30" y="700" width="370" height="160" rx="22" fill="rgba(40,25,10,0.4)"/>
+</svg>
+<div class="cover-content">
+  <div style="height:680px"></div>
+  <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(34px,9vw,48px);color:#FFD080;text-shadow:0 3px 16px rgba(120,70,20,0.8);line-height:1.2;">Tito e o<br>Jardim Secreto</h1>
+  <p style="font-family:'Nunito',sans-serif;font-size:clamp(14px,3.8vw,18px);color:#C8A878;margin-top:10px;font-weight:700;">Uma pequena aventura sobre coragem</p>
+  <img src="data:image/png;base64,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" alt="Dormistória" style="width:80px;height:80px;margin-top:14px;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.6));"/>
+  <a href="https://dormistoria.com.br" target="_blank" style="font-family:'Nunito',sans-serif;font-size:clamp(12px,3.2vw,15px);font-weight:800;color:#FFD080;margin-top:8px;text-decoration:none;letter-spacing:0.04em;text-shadow:0 2px 8px rgba(0,0,0,0.8);">dormistoria.com.br</a>
+  <p style="font-family:'Nunito',sans-serif;font-size:clamp(9px,2.5vw,12px);font-weight:600;color:rgba(255,255,255,0.35);margin-top:6px;">© Dormistória. Todos os direitos reservados.</p>
+</div>
+</div>
+
+<!-- PAGE 1 -->
+<div class="page" id="page-1" style="background:#E8DCC0">
+<div class="illustration" style="height:58%">
+<svg viewBox="0 0 430 540" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="540" fill="#C8DCA0"/>
+  <!-- forest morning -->
+  <rect x="0" y="0" width="430" height="280" fill="#A8D0E0"/>
+  <ellipse cx="215" cy="0" rx="280" ry="160" fill="#FFE8A0" opacity="0.3"/>
+  <!-- trees -->
+  <rect x="20" y="180" width="20" height="220" fill="#6A4A28"/>
+  <ellipse cx="30" cy="150" rx="60" ry="70" fill="#4A8030"/>
+  <rect x="370" y="190" width="18" height="210" fill="#5A3A20"/>
+  <ellipse cx="379" cy="160" rx="56" ry="65" fill="#3A7028"/>
+  <!-- den entrance under tree roots -->
+  <ellipse cx="215" cy="380" rx="80" ry="50" fill="#4A3018"/>
+  <ellipse cx="215" cy="375" rx="55" ry="35" fill="#2A1808"/>
+  <!-- Tito poking head out of den, sleepy -->
+  <ellipse cx="215" cy="345" rx="38" ry="34" fill="#5A4A38"/>
+  <path d="M183,318 Q215,305 247,318 L247,350 Q215,362 183,350Z" fill="#E8DCC8"/>
+  <ellipse cx="200" cy="335" rx="11" ry="17" fill="#3A2A18" transform="rotate(-8 200 335)"/>
+  <ellipse cx="230" cy="335" rx="11" ry="17" fill="#3A2A18" transform="rotate(8 230 335)"/>
+  <circle cx="180" cy="312" r="13" fill="#5A4A38"/>
+  <circle cx="250" cy="312" r="13" fill="#5A4A38"/>
+  <!-- sleepy eyes -->
+  <path d="M195 338 Q200 333 205 338" stroke="#1A1006" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M225 338 Q230 333 235 338" stroke="#1A1006" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="215" cy="352" rx="8" ry="6" fill="#1A1006"/>
+  <path d="M205 360 Q215 366 225 360" stroke="#3A2A18" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- flowers around -->
+  <circle cx="80" cy="430" r="7" fill="#FF8090"/>
+  <circle cx="340" cy="425" r="7" fill="#FFD060"/>
+  <circle cx="120" cy="450" r="6" fill="#A0D060"/>
+  <circle cx="310" cy="455" r="6" fill="#FF90C0"/>
+</svg>
+</div>
+<div class="text-box" style="background:#E8DCC0">
+  <p>Bem fundo na floresta, dentro de uma toquinha quentinha, vivia Tito, o texugo.</p>
+  <p>Tito era curioso sobre quase tudo — menos sobre uma coisa.</p>
+</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page-2" style="background:#F0E8D0">
+<div class="illustration" style="height:55%">
+<svg viewBox="0 0 430 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="500" fill="#D8C8A0"/>
+  <rect x="0" y="0" width="430" height="260" fill="#B0D0E0"/>
+  <!-- forest path -->
+  <rect x="0" y="260" width="430" height="240" fill="#A0B870"/>
+  <path d="M150,260 Q140,380 130,500" stroke="#C0A878" stroke-width="60" fill="none" opacity="0.6"/>
+  <!-- old wooden fence — the mysterious boundary -->
+  <rect x="50" y="280" width="12" height="110" fill="#7A5838" transform="rotate(-3 56 335)"/>
+  <rect x="110" y="275" width="12" height="115" fill="#6A4828" transform="rotate(2 116 332)"/>
+  <rect x="170" y="278" width="12" height="112" fill="#7A5838" transform="rotate(-2 176 334)"/>
+  <rect x="230" y="276" width="12" height="114" fill="#6A4828" transform="rotate(3 236 333)"/>
+  <rect x="290" y="280" width="12" height="110" fill="#7A5838" transform="rotate(-2 296 335)"/>
+  <rect x="350" y="277" width="12" height="113" fill="#6A4828" transform="rotate(2 356 333)"/>
+  <rect x="45" y="310" width="320" height="10" fill="#5A4020" transform="rotate(-1 205 315)"/>
+  <!-- moss and overgrowth on fence -->
+  <ellipse cx="120" cy="290" rx="14" ry="8" fill="#5A8030" opacity="0.7"/>
+  <ellipse cx="300" cy="285" rx="12" ry="7" fill="#5A8030" opacity="0.7"/>
+  <!-- mysterious glow behind fence -->
+  <ellipse cx="215" cy="330" rx="100" ry="60" fill="#FFE890" opacity="0.15"/>
+  <!-- Tito looking at fence nervously, small, far from it -->
+  <ellipse cx="100" cy="430" rx="32" ry="36" fill="#5A4A38"/>
+  <path d="M75,402 Q100,392 125,402 L125,428 Q100,438 75,428Z" fill="#E8DCC8"/>
+  <ellipse cx="88" cy="416" rx="9" ry="14" fill="#3A2A18" transform="rotate(-8 88 416)"/>
+  <ellipse cx="112" cy="416" rx="9" ry="14" fill="#3A2A18" transform="rotate(8 112 416)"/>
+  <circle cx="72" cy="398" r="11" fill="#5A4A38"/>
+  <circle cx="128" cy="398" r="11" fill="#5A4A38"/>
+  <!-- worried wide eyes -->
+  <ellipse cx="92" cy="414" rx="5.5" ry="6.5" fill="#1A1006"/>
+  <ellipse cx="108" cy="414" rx="5.5" ry="6.5" fill="#1A1006"/>
+  <circle cx="94" cy="411.5" r="2.2" fill="#fff"/>
+  <circle cx="110" cy="411.5" r="2.2" fill="#fff"/>
+  <!-- worried mouth -->
+  <path d="M92 428 Q100 424 108 428" stroke="#3A2A18" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- arms close to body, nervous -->
+  <ellipse cx="80" cy="438" rx="13" ry="18" fill="#5A4A38" transform="rotate(15 80 438)"/>
+  <ellipse cx="120" cy="436" rx="13" ry="18" fill="#5A4A38" transform="rotate(-15 120 436)"/>
+</svg>
+</div>
+<div class="text-box" style="background:#F0E8D0">
+  <p>Atrás da velha cerca de madeira, vinha sempre um barulinho estranho.</p>
+  <p>— <em>"Cof... cof... clic-clic..."</em> — fazia o barulho, todos os dias.</p>
+</div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page-3" style="background:#EEE0C8">
+<div class="illustration" style="height:56%">
+<svg viewBox="0 0 430 520" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="520" fill="#C8B888"/>
+  <!-- cozy den interior -->
+  <rect x="0" y="0" width="430" height="520" fill="#A8845A"/>
+  <ellipse cx="215" cy="260" rx="280" ry="320" fill="#8A6840"/>
+  <!-- den walls texture -->
+  <ellipse cx="80" cy="150" rx="40" ry="50" fill="#7A5836" opacity="0.5"/>
+  <ellipse cx="350" cy="180" rx="36" ry="44" fill="#7A5836" opacity="0.5"/>
+  <!-- cozy bed of leaves -->
+  <ellipse cx="215" cy="400" rx="140" ry="40" fill="#C08838" opacity="0.6"/>
+  <!-- mother badger comforting Tito -->
+  <ellipse cx="290" cy="320" rx="54" ry="62" fill="#6A5240"/>
+  <path d="M250,278 Q290,265 330,278 L330,318 Q290,332 250,318Z" fill="#F0E4D0"/>
+  <ellipse cx="270" cy="298" rx="12" ry="19" fill="#4A3826" transform="rotate(-8 270 298)"/>
+  <ellipse cx="310" cy="298" rx="12" ry="19" fill="#4A3826" transform="rotate(8 310 298)"/>
+  <circle cx="252" cy="270" r="14" fill="#6A5240"/>
+  <circle cx="328" cy="270" r="14" fill="#6A5240"/>
+  <ellipse cx="280" cy="303" rx="5.5" ry="6" fill="#1A1006"/>
+  <ellipse cx="300" cy="303" rx="5.5" ry="6" fill="#1A1006"/>
+  <path d="M278 320 Q290 327 302 320" stroke="#3A2A18" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- mother arm around Tito -->
+  <ellipse cx="248" cy="335" rx="22" ry="13" fill="#6A5240" transform="rotate(20 248 335)"/>
+  <!-- Tito sitting, looking up at mom, less scared now -->
+  <ellipse cx="160" cy="350" rx="36" ry="40" fill="#5A4A38"/>
+  <path d="M132,320 Q160,310 188,320 L188,348 Q160,358 132,348Z" fill="#E8DCC8"/>
+  <ellipse cx="148" cy="334" rx="10" ry="16" fill="#3A2A18" transform="rotate(-8 148 334)"/>
+  <ellipse cx="172" cy="334" rx="10" ry="16" fill="#3A2A18" transform="rotate(8 172 334)"/>
+  <circle cx="134" cy="314" r="12" fill="#5A4A38"/>
+  <circle cx="186" cy="314" r="12" fill="#5A4A38"/>
+  <ellipse cx="153" cy="332" rx="5" ry="5.5" fill="#1A1006"/>
+  <ellipse cx="167" cy="332" rx="5" ry="5.5" fill="#1A1006"/>
+  <path d="M150 346 Q160 351 170 346" stroke="#3A2A18" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- small mushroom lamp glowing -->
+  <rect x="80" y="380" width="8" height="20" fill="#C0A878"/>
+  <ellipse cx="84" cy="376" rx="16" ry="12" fill="#FFD060" opacity="0.8"/>
+</svg>
+</div>
+<div class="text-box" style="background:#EEE0C8">
+  <p>— "Mamãe, e se aquele barulho for algo terrível?" — perguntou Tito, baixinho.</p>
+  <p>— "Às vezes a coisa que dá medo é só uma surpresa esperando para ser descoberta" — disse Mamãe Texugo, sorrindo.</p>
+</div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page-4" style="background:#A0B870">
+<div class="illustration" style="height:65%">
+<svg viewBox="0 0 430 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="620" fill="#A0B870"/>
+  <rect x="0" y="0" width="430" height="320" fill="#A8D0E0"/>
+  <!-- forest trees -->
+  <rect x="20" y="180" width="18" height="170" fill="#6A4A28"/>
+  <ellipse cx="29" cy="145" rx="55" ry="62" fill="#4A8030"/>
+  <rect x="380" y="200" width="16" height="150" fill="#5A3A20"/>
+  <ellipse cx="388" cy="165" rx="50" ry="58" fill="#3A7028"/>
+  <!-- path leading to fence -->
+  <path d="M150,320 Q160,440 170,620" stroke="#C0A878" stroke-width="60" fill="none" opacity="0.55"/>
+  <!-- fence closer now -->
+  <rect x="100" y="380" width="14" height="140" fill="#7A5838"/>
+  <rect x="170" y="375" width="14" height="145" fill="#6A4828"/>
+  <rect x="240" y="378" width="14" height="142" fill="#7A5838"/>
+  <rect x="310" y="375" width="14" height="145" fill="#6A4828"/>
+  <rect x="95" y="420" width="240" height="12" fill="#5A4020"/>
+  <!-- TITO walking towards fence, determined but nervous -->
+  <ellipse cx="215" cy="305" rx="44" ry="50" fill="#5A4A38"/>
+  <path d="M180,267 Q215,255 250,267 L250,303 Q215,315 180,303Z" fill="#E8DCC8"/>
+  <ellipse cx="198" cy="283" rx="13" ry="20" fill="#3A2A18" transform="rotate(-8 198 283)"/>
+  <ellipse cx="232" cy="283" rx="13" ry="20" fill="#3A2A18" transform="rotate(8 232 283)"/>
+  <circle cx="178" cy="260" r="15" fill="#5A4A38"/>
+  <circle cx="252" cy="260" r="15" fill="#5A4A38"/>
+  <!-- determined eyes -->
+  <ellipse cx="203" cy="282" rx="6" ry="7" fill="#1A1006"/>
+  <ellipse cx="227" cy="282" rx="6" ry="7" fill="#1A1006"/>
+  <circle cx="205" cy="279.5" r="2.2" fill="#fff"/>
+  <circle cx="229" cy="279.5" r="2.2" fill="#fff"/>
+  <path d="M196 273 Q200 270 205 273" stroke="#3A2A18" stroke-width="1.8" fill="none"/>
+  <path d="M225 273 Q230 270 234 273" stroke="#3A2A18" stroke-width="1.8" fill="none"/>
+  <path d="M205 295 Q215 301 225 295" stroke="#3A2A18" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- walking arms -->
+  <ellipse cx="172" cy="309" rx="14" ry="22" fill="#5A4A38" transform="rotate(-25 172 309)"/>
+  <ellipse cx="258" cy="305" rx="14" ry="22" fill="#5A4A38" transform="rotate(25 258 305)"/>
+  <!-- walking legs -->
+  <ellipse cx="195" cy="349" rx="13" ry="9" fill="#4A3828" transform="rotate(10 195 349)"/>
+  <ellipse cx="235" cy="353" rx="13" ry="9" fill="#4A3828" transform="rotate(-10 235 353)"/>
+</svg>
+</div>
+<div class="text-box" style="background:#A0B870">
+  <p>No dia seguinte, com o coraçãozinho batendo rápido, Tito decidiu: ia até a cerca ver o que era.</p>
+</div>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page" id="page-5" style="background:#E0D8B8">
+<div class="illustration" style="height:62%">
+<svg viewBox="0 0 430 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="620" fill="#D0C098"/>
+  <rect x="0" y="0" width="430" height="380" fill="#A0C8D8"/>
+  <rect x="0" y="380" width="430" height="240" fill="#90A860"/>
+  <!-- the wooden fence up close -->
+  <rect x="30" y="150" width="22" height="280" fill="#7A5838"/>
+  <rect x="110" y="140" width="22" height="290" fill="#6A4828"/>
+  <rect x="190" y="145" width="22" height="285" fill="#7A5838"/>
+  <rect x="270" y="138" width="22" height="292" fill="#6A4828"/>
+  <rect x="350" y="148" width="22" height="282" fill="#7A5838"/>
+  <rect x="25" y="190" width="380" height="16" fill="#5A4020"/>
+  <rect x="25" y="280" width="380" height="16" fill="#5A4020"/>
+  <!-- moss texture -->
+  <ellipse cx="120" cy="200" rx="18" ry="10" fill="#5A8030" opacity="0.6"/>
+  <ellipse cx="280" cy="195" rx="16" ry="9" fill="#5A8030" opacity="0.6"/>
+  <!-- gap in fence where Tito peeks through -->
+  <rect x="190" y="200" width="22" height="200" fill="#C8B888"/>
+  <!-- Tito's face peeking through the gap, big close-up eyes full of curiosity -->
+  <circle cx="201" cy="310" r="32" fill="#5A4A38"/>
+  <path d="M172,288 Q201,278 230,288 L230,312 Q201,324 172,312Z" fill="#E8DCC8"/>
+  <ellipse cx="188" cy="302" rx="9" ry="14" fill="#3A2A18" transform="rotate(-8 188 302)"/>
+  <ellipse cx="214" cy="302" rx="9" ry="14" fill="#3A2A18" transform="rotate(8 214 302)"/>
+  <!-- huge curious eyes pressed to gap -->
+  <ellipse cx="192" cy="300" rx="6.5" ry="7.5" fill="#1A1006"/>
+  <ellipse cx="210" cy="300" rx="6.5" ry="7.5" fill="#1A1006"/>
+  <circle cx="194.5" cy="297" r="2.8" fill="#fff"/>
+  <circle cx="212.5" cy="297" r="2.8" fill="#fff"/>
+  <!-- O mouth surprised at what he sees -->
+  <ellipse cx="201" cy="316" rx="5" ry="6" fill="#1A1006"/>
+</svg>
+</div>
+<div class="text-box" style="background:#E0D8B8">
+  <p>Tito chegou pertinho da cerca e espiou por uma fresta.</p>
+  <p>O que será que ele viu do outro lado?</p>
+</div>
+</div>
+
+<!-- PAGE 6 -->
+<div class="page" id="page-6" style="background:#FFF5E0">
+<div class="illustration" style="height:65%">
+<svg viewBox="0 0 430 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="620" fill="#F0E0A8"/>
+  <!-- secret garden revealed - warm, colorful, magical -->
+  <rect x="0" y="0" width="430" height="350" fill="#FFE8B0"/>
+  <ellipse cx="215" cy="0" rx="300" ry="180" fill="#FFD060" opacity="0.3"/>
+  <rect x="0" y="350" width="430" height="270" fill="#B8D070"/>
+  <!-- lush secret garden with many flowers -->
+  <circle cx="50" cy="370" r="10" fill="#FF8090"/>
+  <circle cx="90" cy="365" r="8" fill="#FFD060"/>
+  <circle cx="130" cy="375" r="10" fill="#FF90C0"/>
+  <circle cx="170" cy="368" r="8" fill="#A0D060"/>
+  <circle cx="220" cy="378" r="10" fill="#FF8090"/>
+  <circle cx="270" cy="370" r="8" fill="#FFD060"/>
+  <circle cx="320" cy="376" r="10" fill="#FF90C0"/>
+  <circle cx="370" cy="372" r="8" fill="#FFAA60"/>
+  <!-- second row -->
+  <circle cx="70" cy="405" r="7" fill="#FFD060"/>
+  <circle cx="150" cy="408" r="6" fill="#FF8090"/>
+  <circle cx="240" cy="402" r="7" fill="#A0D060"/>
+  <circle cx="330" cy="406" r="6" fill="#FF90C0"/>
+  <!-- old apple tree with fruits -->
+  <rect x="320" y="200" width="24" height="160" fill="#6A4828"/>
+  <ellipse cx="332" cy="170" rx="62" ry="58" fill="#4A8838"/>
+  <circle cx="305" cy="160" r="8" fill="#D04040"/>
+  <circle cx="345" cy="150" r="8" fill="#D04040"/>
+  <circle cx="320" cy="190" r="8" fill="#D04040"/>
+  <circle cx="358" cy="180" r="8" fill="#D04040"/>
+  <!-- HEDGEHOG friend Pim — the source of the "clic-clic" sound (eating apple seeds!) -->
+  <ellipse cx="150" cy="280" rx="44" ry="34" fill="#7A5028"/>
+  <!-- spines -->
+  <line x1="125" y1="258" x2="116" y2="238" stroke="#6A4020" stroke-width="2.5"/>
+  <line x1="140" y1="250" x2="135" y2="228" stroke="#6A4020" stroke-width="2.5"/>
+  <line x1="155" y1="247" x2="153" y2="225" stroke="#6A4020" stroke-width="2.5"/>
+  <line x1="170" y1="250" x2="175" y2="228" stroke="#6A4020" stroke-width="2.5"/>
+  <line x1="185" y1="258" x2="194" y2="238" stroke="#6A4020" stroke-width="2.5"/>
+  <!-- face -->
+  <ellipse cx="125" cy="288" rx="26" ry="22" fill="#C09860"/>
+  <ellipse cx="115" cy="282" rx="3.5" ry="4" fill="#2A1808"/>
+  <ellipse cx="132" cy="282" rx="3.5" ry="4" fill="#2A1808"/>
+  <circle cx="116.5" cy="280.5" r="1.5" fill="#fff"/>
+  <circle cx="133.5" cy="280.5" r="1.5" fill="#fff"/>
+  <ellipse cx="122" cy="295" rx="5" ry="4" fill="#2A1808"/>
+  <path d="M115 300 Q122 305 129 300" stroke="#2A1808" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- apple in paws making the clic-clic sound -->
+  <circle cx="110" cy="308" r="14" fill="#D04040"/>
+  <ellipse cx="106" cy="302" rx="4" ry="6" fill="#F08080" opacity="0.6"/>
+  <ellipse cx="90" cy="305" rx="12" ry="7" fill="#C09860" transform="rotate(15 90 305)"/>
+  <ellipse cx="130" cy="312" rx="12" ry="7" fill="#C09860" transform="rotate(-15 130 312)"/>
+</svg>
+</div>
+<div class="text-box" style="background:#FFF5E0">
+  <p>Era um jardim secreto, cheio de flores e uma macieira enorme!</p>
+  <p>E o barulho? Era só o Porco-Espinho Pim mastigando maçãs. <em>Cof... cof... clic-clic!</em></p>
+</div>
+</div>
+
+<!-- PAGE 7 -->
+<div class="page" id="page-7" style="background:#FFF8E8">
+<div class="illustration" style="height:55%">
+<svg viewBox="0 0 430 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="500" fill="#F0E0A0"/>
+  <rect x="0" y="300" width="430" height="200" fill="#B8D070"/>
+  <!-- flowers -->
+  <circle cx="60" cy="310" r="8" fill="#FF8090"/>
+  <circle cx="350" cy="315" r="8" fill="#FFD060"/>
+  <!-- Pim turning, surprised to see Tito, but happy -->
+  <ellipse cx="280" cy="370" rx="48" ry="36" fill="#7A5028"/>
+  <line x1="252" y1="345" x2="242" y2="322" stroke="#6A4020" stroke-width="2.8"/>
+  <line x1="268" y1="336" x2="263" y2="312" stroke="#6A4020" stroke-width="2.8"/>
+  <line x1="285" y1="333" x2="283" y2="308" stroke="#6A4020" stroke-width="2.8"/>
+  <line x1="302" y1="336" x2="307" y2="312" stroke="#6A4020" stroke-width="2.8"/>
+  <line x1="318" y1="345" x2="328" y2="322" stroke="#6A4020" stroke-width="2.8"/>
+  <ellipse cx="252" cy="380" rx="28" ry="24" fill="#C09860"/>
+  <ellipse cx="241" cy="373" rx="4" ry="4.5" fill="#2A1808"/>
+  <ellipse cx="261" cy="373" rx="4" ry="4.5" fill="#2A1808"/>
+  <circle cx="242.5" cy="371.5" r="1.8" fill="#fff"/>
+  <circle cx="262.5" cy="371.5" r="1.8" fill="#fff"/>
+  <ellipse cx="251" cy="389" rx="5.5" ry="4.5" fill="#2A1808"/>
+  <path d="M242 396 Q251 403 260 396" stroke="#2A1808" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <ellipse cx="232" cy="392" rx="14" ry="8" fill="#C09860" transform="rotate(15 232 392)"/>
+  <ellipse cx="270" cy="396" rx="14" ry="8" fill="#C09860" transform="rotate(-15 270 396)"/>
+  <!-- TITO at gap, eyes wide with relief and joy -->
+  <ellipse cx="115" cy="395" rx="36" ry="40" fill="#5A4A38"/>
+  <path d="M85,365 Q115,355 145,365 L145,392 Q115,403 85,392Z" fill="#E8DCC8"/>
+  <ellipse cx="102" cy="380" rx="10" ry="16" fill="#3A2A18" transform="rotate(-8 102 380)"/>
+  <ellipse cx="128" cy="380" rx="10" ry="16" fill="#3A2A18" transform="rotate(8 128 380)"/>
+  <circle cx="88" cy="360" r="13" fill="#5A4A38"/>
+  <circle cx="142" cy="360" r="13" fill="#5A4A38"/>
+  <!-- relieved happy eyes -->
+  <path d="M97 378 Q102 372 107 378" stroke="#1A1006" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+  <path d="M123 378 Q128 372 133 378" stroke="#1A1006" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+  <path d="M105 392 Q115 398 125 392" stroke="#3A2A18" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <circle cx="95" cy="386" r="6" fill="#FFB090" opacity="0.5"/>
+  <circle cx="135" cy="386" r="6" fill="#FFB090" opacity="0.5"/>
+</svg>
+</div>
+<div class="text-box" style="background:#FFF8E8">
+  <p>— "Oh, olá!" — disse Pim, surpreso. — "Você é o vizinho de quem ouço cheirinho de toquinha! Quer entrar?"</p>
+</div>
+</div>
+
+<!-- PAGE 8 -->
+<div class="page" id="page-8" style="background:#A8C868">
+<div class="illustration" style="height:65%">
+<svg viewBox="0 0 430 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="620" fill="#A8C868"/>
+  <rect x="0" y="0" width="430" height="320" fill="#FFE0A0"/>
+  <ellipse cx="215" cy="0" rx="300" ry="180" fill="#FFD060" opacity="0.3"/>
+  <!-- big secret garden scene -->
+  <!-- apple tree -->
+  <rect x="320" y="120" width="28" height="180" fill="#6A4828"/>
+  <ellipse cx="334" cy="90" rx="78" ry="72" fill="#4A8838"/>
+  <circle cx="295" cy="75" r="10" fill="#D04040"/>
+  <circle cx="350" cy="60" r="10" fill="#D04040"/>
+  <circle cx="310" cy="110" r="10" fill="#D04040"/>
+  <circle cx="365" cy="100" r="10" fill="#D04040"/>
+  <circle cx="330" cy="65" r="10" fill="#D04040"/>
+  <!-- flowers field -->
+  <circle cx="50" cy="320" r="10" fill="#FF8090"/>
+  <circle cx="100" cy="315" r="8" fill="#FFD060"/>
+  <circle cx="150" cy="325" r="10" fill="#FF90C0"/>
+  <circle cx="200" cy="318" r="8" fill="#A0D060"/>
+  <circle cx="250" cy="328" r="10" fill="#FF8090"/>
+  <circle cx="60" cy="360" r="7" fill="#FFD060"/>
+  <circle cx="130" cy="365" r="6" fill="#FF8090"/>
+  <circle cx="220" cy="358" r="7" fill="#A0D060"/>
+  <!-- Tito and Pim playing together, sharing apples -->
+  <!-- Tito sitting -->
+  <ellipse cx="160" cy="450" rx="46" ry="52" fill="#5A4A38"/>
+  <path d="M122,415 Q160,402 198,415 L198,448 Q160,460 122,448Z" fill="#E8DCC8"/>
+  <ellipse cx="145" cy="432" rx="13" ry="20" fill="#3A2A18" transform="rotate(-8 145 432)"/>
+  <ellipse cx="175" cy="432" rx="13" ry="20" fill="#3A2A18" transform="rotate(8 175 432)"/>
+  <circle cx="123" cy="407" r="15" fill="#5A4A38"/>
+  <circle cx="197" cy="407" r="15" fill="#5A4A38"/>
+  <path d="M138 428 Q143 422 148 428" stroke="#1A1006" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M172 428 Q177 422 182 428" stroke="#1A1006" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M148 446 Q160 454 172 446" stroke="#3A2A18" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <circle cx="138" cy="440" r="7" fill="#FFB090" opacity="0.5"/>
+  <circle cx="182" cy="440" r="7" fill="#FFB090" opacity="0.5"/>
+  <!-- arms holding apple -->
+  <ellipse cx="200" cy="455" rx="18" ry="11" fill="#5A4A38" transform="rotate(-20 200 455)"/>
+  <circle cx="222" cy="450" r="16" fill="#D04040"/>
+  <!-- Pim next to Tito -->
+  <ellipse cx="290" cy="460" rx="42" ry="32" fill="#7A5028"/>
+  <line x1="262" y1="435" x2="252" y2="412" stroke="#6A4020" stroke-width="2.6"/>
+  <line x1="278" y1="426" x2="273" y2="402" stroke="#6A4020" stroke-width="2.6"/>
+  <line x1="295" y1="424" x2="293" y2="399" stroke="#6A4020" stroke-width="2.6"/>
+  <line x1="312" y1="426" x2="317" y2="402" stroke="#6A4020" stroke-width="2.6"/>
+  <line x1="328" y1="435" x2="338" y2="412" stroke="#6A4020" stroke-width="2.6"/>
+  <ellipse cx="262" cy="468" rx="25" ry="22" fill="#C09860"/>
+  <ellipse cx="252" cy="461" rx="3.5" ry="4" fill="#2A1808"/>
+  <ellipse cx="271" cy="461" rx="3.5" ry="4" fill="#2A1808"/>
+  <ellipse cx="261" cy="477" rx="5" ry="4" fill="#2A1808"/>
+  <path d="M252 483 Q261 489 270 483" stroke="#2A1808" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+</svg>
+</div>
+<div class="text-box" style="background:#A8C868">
+  <p>Tito entrou no jardim secreto e os dois passaram a tarde brincando entre as flores e comendo maçãs docinhas.</p>
+</div>
+</div>
+
+<!-- PAGE 9 -->
+<div class="page" id="page-9" style="background:#FFF0E0">
+<div class="illustration" style="height:56%">
+<svg viewBox="0 0 430 520" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="520" fill="#F8E0C0"/>
+  <rect x="0" y="300" width="430" height="220" fill="#A8C868"/>
+  <rect x="0" y="0" width="430" height="300" fill="#FFD8A0"/>
+  <!-- afternoon golden light -->
+  <ellipse cx="215" cy="0" rx="300" ry="180" fill="#FFB860" opacity="0.3"/>
+  <!-- butterfly chase scene -->
+  <ellipse cx="200" cy="180" rx="20" ry="11" fill="#FFB0E0" opacity="0.85" transform="rotate(-15 200 180)"/>
+  <ellipse cx="222" cy="178" rx="20" ry="11" fill="#FFB0E0" opacity="0.85" transform="rotate(15 222 178)"/>
+  <circle cx="211" cy="180" r="4" fill="#FF70A0"/>
+  <ellipse cx="320" cy="220" rx="16" ry="9" fill="#B0D0FF" opacity="0.8" transform="rotate(-12 320 220)"/>
+  <ellipse cx="338" cy="218" rx="16" ry="9" fill="#B0D0FF" opacity="0.8" transform="rotate(12 338 218)"/>
+  <!-- Tito jumping, chasing butterfly, joyful -->
+  <ellipse cx="160" cy="350" rx="40" ry="46" fill="#5A4A38"/>
+  <path d="M126,318 Q160,308 194,318 L194,348 Q160,358 126,348Z" fill="#E8DCC8"/>
+  <ellipse cx="146" cy="334" rx="11" ry="17" fill="#3A2A18" transform="rotate(-8 146 334)"/>
+  <ellipse cx="174" cy="334" rx="11" ry="17" fill="#3A2A18" transform="rotate(8 174 334)"/>
+  <circle cx="128" cy="312" r="13" fill="#5A4A38"/>
+  <circle cx="192" cy="312" r="13" fill="#5A4A38"/>
+  <path d="M138 330 Q142 325 147 330" stroke="#1A1006" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M173 330 Q178 325 183 330" stroke="#1A1006" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M148 346 Q160 353 172 346" stroke="#3A2A18" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <circle cx="138" cy="340" r="6" fill="#FFB090" opacity="0.5"/>
+  <circle cx="182" cy="340" r="6" fill="#FFB090" opacity="0.5"/>
+  <!-- arms up reaching for butterfly -->
+  <ellipse cx="130" cy="325" rx="18" ry="9" fill="#5A4A38" transform="rotate(-50 130 325)"/>
+  <ellipse cx="190" cy="320" rx="18" ry="9" fill="#5A4A38" transform="rotate(50 190 320)"/>
+  <!-- jump motion lines -->
+  <ellipse cx="160" cy="398" rx="36" ry="10" fill="#90A850" opacity="0.4"/>
+</svg>
+</div>
+<div class="text-box" style="background:#FFF0E0">
+  <p>Tito riu como nunca tinha rido antes, correndo entre as borboletas do jardim.</p>
+  <p>Quem diria que o medo escondia uma alegria assim?</p>
+</div>
+</div>
+
+<!-- PAGE 10 -->
+<div class="page" id="page-10" style="background:#F0F0D8">
+<div class="illustration" style="height:57%">
+<svg viewBox="0 0 430 528" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="528" fill="#D8D8A8"/>
+  <rect x="0" y="0" width="430" height="280" fill="#90C0D8"/>
+  <rect x="0" y="280" width="430" height="248" fill="#A0B860"/>
+  <!-- more garden friends arrive - a rabbit -->
+  <ellipse cx="320" cy="370" rx="32" ry="40" fill="#F0E8E0"/>
+  <ellipse cx="310" cy="335" rx="9" ry="30" fill="#F0E8E0"/>
+  <ellipse cx="310" cy="335" rx="5.5" ry="22" fill="#FFD0D0"/>
+  <ellipse cx="330" cy="333" rx="9" ry="30" fill="#F0E8E0"/>
+  <ellipse cx="330" cy="333" rx="5.5" ry="22" fill="#FFD0D0"/>
+  <circle cx="320" cy="365" r="24" fill="#F0E8E0"/>
+  <ellipse cx="312" cy="362" rx="4" ry="4.5" fill="#4A3020"/>
+  <ellipse cx="328" cy="362" rx="4" ry="4.5" fill="#4A3020"/>
+  <ellipse cx="320" cy="373" rx="5" ry="4" fill="#FFB0A0"/>
+  <path d="M313 378 Q320 383 327 378" stroke="#8A5040" stroke-width="1.6" fill="none"/>
+  <!-- Pim and Tito approaching rabbit together, introducing -->
+  <ellipse cx="170" cy="400" rx="40" ry="46" fill="#5A4A38"/>
+  <path d="M136,368 Q170,358 204,368 L204,398 Q170,408 136,398Z" fill="#E8DCC8"/>
+  <ellipse cx="156" cy="384" rx="11" ry="17" fill="#3A2A18" transform="rotate(-8 156 384)"/>
+  <ellipse cx="184" cy="384" rx="11" ry="17" fill="#3A2A18" transform="rotate(8 184 384)"/>
+  <circle cx="138" cy="362" r="13" fill="#5A4A38"/>
+  <circle cx="202" cy="362" r="13" fill="#5A4A38"/>
+  <ellipse cx="161" cy="382" rx="5" ry="5.5" fill="#1A1006"/>
+  <ellipse cx="179" cy="382" rx="5" ry="5.5" fill="#1A1006"/>
+  <path d="M158 396 Q170 402 182 396" stroke="#3A2A18" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <!-- arm pointing/introducing -->
+  <ellipse cx="206" cy="388" rx="18" ry="9" fill="#5A4A38" transform="rotate(-15 206 388)"/>
+  <!-- Pim small beside -->
+  <ellipse cx="90" cy="420" rx="32" ry="24" fill="#7A5028"/>
+  <line x1="68" y1="400" x2="60" y2="382" stroke="#6A4020" stroke-width="2.2"/>
+  <line x1="80" y1="394" x2="76" y2="375" stroke="#6A4020" stroke-width="2.2"/>
+  <line x1="100" y1="394" x2="104" y2="375" stroke="#6A4020" stroke-width="2.2"/>
+  <line x1="112" y1="400" x2="120" y2="382" stroke="#6A4020" stroke-width="2.2"/>
+  <ellipse cx="68" cy="428" rx="20" ry="17" fill="#C09860"/>
+  <ellipse cx="60" cy="422" rx="3" ry="3.5" fill="#2A1808"/>
+  <ellipse cx="76" cy="422" rx="3" ry="3.5" fill="#2A1808"/>
+  <path d="M60 434 Q68 439 76 434" stroke="#2A1808" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>
+</div>
+<div class="text-box" style="background:#F0F0D8">
+  <p>Pim apresentou Tito para a Coelha Flora, que também adorava brincar no jardim secreto.</p>
+  <p>De repente, o jardim não parecia mais tão secreto — parecia um lugar de amigos.</p>
+</div>
+</div>
+
+<!-- PAGE 11 -->
+<div class="page" id="page-11" style="background:#98B858">
+<div class="illustration" style="height:65%">
+<svg viewBox="0 0 430 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="620" fill="#98B858"/>
+  <rect x="0" y="0" width="430" height="280" fill="#88B8D0"/>
+  <!-- big group play scene -->
+  <!-- big oak tree centerpiece -->
+  <rect x="190" y="60" width="50" height="200" fill="#6A4828"/>
+  <ellipse cx="215" cy="10" rx="140" ry="100" fill="#3A7828"/>
+  <ellipse cx="100" cy="55" rx="85" ry="65" fill="#4A8838"/>
+  <ellipse cx="330" cy="48" rx="90" ry="68" fill="#2A6820"/>
+  <!-- flowers carpet -->
+  <circle cx="60" cy="300" r="9" fill="#FF8090"/>
+  <circle cx="110" cy="295" r="7" fill="#FFD060"/>
+  <circle cx="170" cy="305" r="9" fill="#FF90C0"/>
+  <circle cx="260" cy="298" r="7" fill="#A0D060"/>
+  <circle cx="320" cy="308" r="9" fill="#FF8090"/>
+  <circle cx="380" cy="300" r="7" fill="#FFD060"/>
+  <!-- Tito, Pim, and Flora playing, holding paws -->
+  <!-- Flora rabbit -->
+  <ellipse cx="150" cy="430" rx="34" ry="42" fill="#F0E8E0"/>
+  <ellipse cx="138" cy="388" rx="9" ry="32" fill="#F0E8E0"/>
+  <ellipse cx="138" cy="388" rx="5.5" ry="24" fill="#FFD0D0"/>
+  <ellipse cx="162" cy="386" rx="9" ry="32" fill="#F0E8E0"/>
+  <ellipse cx="162" cy="386" rx="5.5" ry="24" fill="#FFD0D0"/>
+  <circle cx="150" cy="424" r="26" fill="#F0E8E0"/>
+  <ellipse cx="141" cy="420" rx="4" ry="4.5" fill="#4A3020"/>
+  <ellipse cx="159" cy="420" rx="4" ry="4.5" fill="#4A3020"/>
+  <path d="M141 432 Q150 438 159 432" stroke="#8A5040" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <ellipse cx="122" cy="442" rx="16" ry="8" fill="#F0E8E0" transform="rotate(-20 122 442)"/>
+  <ellipse cx="178" cy="440" rx="16" ry="8" fill="#F0E8E0" transform="rotate(20 178 440)"/>
+  <!-- Tito center, arms linked -->
+  <ellipse cx="245" cy="450" rx="44" ry="50" fill="#5A4A38"/>
+  <path d="M210,416 Q245,405 280,416 L280,448 Q245,460 210,448Z" fill="#E8DCC8"/>
+  <ellipse cx="230" cy="434" rx="12" ry="19" fill="#3A2A18" transform="rotate(-8 230 434)"/>
+  <ellipse cx="260" cy="434" rx="12" ry="19" fill="#3A2A18" transform="rotate(8 260 434)"/>
+  <circle cx="212" cy="410" r="14" fill="#5A4A38"/>
+  <circle cx="278" cy="410" r="14" fill="#5A4A38"/>
+  <path d="M223 430 Q228 424 233 430" stroke="#1A1006" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+  <path d="M257 430 Q262 424 267 430" stroke="#1A1006" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+  <path d="M233 448 Q245 455 257 448" stroke="#3A2A18" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+  <ellipse cx="200" cy="440" rx="17" ry="9" fill="#5A4A38" transform="rotate(20 200 440)"/>
+  <ellipse cx="290" cy="436" rx="17" ry="9" fill="#5A4A38" transform="rotate(-20 290 436)"/>
+  <!-- Pim on the other side -->
+  <ellipse cx="345" cy="460" rx="38" ry="28" fill="#7A5028"/>
+  <line x1="318" y1="436" x2="309" y2="415" stroke="#6A4020" stroke-width="2.4"/>
+  <line x1="333" y1="428" x2="328" y2="406" stroke="#6A4020" stroke-width="2.4"/>
+  <line x1="357" y1="426" x2="356" y2="404" stroke="#6A4020" stroke-width="2.4"/>
+  <line x1="372" y1="432" x2="380" y2="411" stroke="#6A4020" stroke-width="2.4"/>
+  <ellipse cx="318" cy="468" rx="23" ry="20" fill="#C09860"/>
+  <ellipse cx="309" cy="462" rx="3.5" ry="4" fill="#2A1808"/>
+  <ellipse cx="327" cy="462" rx="3.5" ry="4" fill="#2A1808"/>
+  <path d="M309 476 Q318 481 327 476" stroke="#2A1808" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+</svg>
+</div>
+<div class="text-box" style="background:#98B858">
+  <p>Os três brincaram de roda debaixo do carvalho gigante até o sol começar a descer no céu.</p>
+</div>
+</div>
+
+<!-- PAGE 12 -->
+<div class="page" id="page-12" style="background:#FFE8D0">
+<div class="illustration" style="height:62%">
+<svg viewBox="0 0 430 580" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="580" fill="#F0D0A8"/>
+  <!-- warm sunset over garden -->
+  <rect x="0" y="0" width="430" height="320" fill="#F8B860"/>
+  <ellipse cx="215" cy="0" rx="280" ry="180" fill="#FF9840" opacity="0.4"/>
+  <circle cx="350" cy="110" r="60" fill="#FFC040" opacity="0.85"/>
+  <ellipse cx="100" cy="80" rx="70" ry="32" fill="#FFB0A0" opacity="0.7"/>
+  <ellipse cx="60" cy="60" rx="45" ry="24" fill="#FFC0B0" opacity="0.7"/>
+  <rect x="0" y="320" width="430" height="260" fill="#A8B860"/>
+  <!-- silhouettes of fence and tree against sunset -->
+  <rect x="50" y="280" width="14" height="100" fill="#4A3020" opacity="0.7"/>
+  <rect x="110" y="275" width="14" height="105" fill="#4A3020" opacity="0.7"/>
+  <rect x="170" y="278" width="14" height="102" fill="#4A3020" opacity="0.7"/>
+  <!-- Tito waving goodbye to friends, walking home, happy -->
+  <ellipse cx="280" cy="440" rx="38" ry="44" fill="#5A4A38"/>
+  <path d="M248,408 Q280,398 312,408 L312,438 Q280,448 248,438Z" fill="#E8DCC8"/>
+  <ellipse cx="265" cy="424" rx="10" ry="16" fill="#3A2A18" transform="rotate(-8 265 424)"/>
+  <ellipse cx="295" cy="424" rx="10" ry="16" fill="#3A2A18" transform="rotate(8 295 424)"/>
+  <circle cx="250" cy="402" r="13" fill="#5A4A38"/>
+  <circle cx="310" cy="402" r="13" fill="#5A4A38"/>
+  <path d="M257 421 Q262 416 267 421" stroke="#1A1006" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M287 421 Q292 416 297 421" stroke="#1A1006" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M267 437 Q280 443 293 437" stroke="#3A2A18" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <circle cx="257" cy="431" r="6" fill="#FFB090" opacity="0.5"/>
+  <circle cx="303" cy="431" r="6" fill="#FFB090" opacity="0.5"/>
+  <!-- waving arm -->
+  <ellipse cx="320" cy="412" rx="18" ry="8" fill="#5A4A38" transform="rotate(-45 320 412)"/>
+  <ellipse cx="240" cy="448" rx="14" ry="20" fill="#5A4A38" transform="rotate(15 240 448)"/>
+</svg>
+</div>
+<div class="text-box" style="background:#FFE8D0">
+  <p>Quando o céu ficou cor de laranja, Tito se despediu dos amigos, prometendo voltar amanhã.</p>
+</div>
+</div>
+
+<!-- PAGE 13 -->
+<div class="page" id="page-13" style="background:#E8E0F0">
+<div class="illustration" style="height:55%">
+<svg viewBox="0 0 430 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="500" fill="#D0C8E8"/>
+  <rect x="0" y="280" width="430" height="220" fill="#8A6840"/>
+  <rect x="0" y="0" width="430" height="280" fill="#B8B0E0"/>
+  <!-- twilight purple -->
+  <ellipse cx="215" cy="0" rx="280" ry="170" fill="#9888D0" opacity="0.4"/>
+  <circle cx="350" cy="50" r="2" fill="#FFFAE0" opacity="0.8"/>
+  <circle cx="80" cy="40" r="1.5" fill="#FFFAE0" opacity="0.7"/>
+  <circle cx="200" cy="25" r="1.8" fill="#FFFAE0" opacity="0.8"/>
+  <!-- forest path home -->
+  <path d="M150,280 Q160,380 170,500" stroke="#A88858" stroke-width="60" fill="none" opacity="0.6"/>
+  <!-- den entrance, warm light from inside -->
+  <ellipse cx="280" cy="380" rx="70" ry="46" fill="#4A3018"/>
+  <ellipse cx="280" cy="375" rx="48" ry="30" fill="#FFD060" opacity="0.6"/>
+  <!-- Mother badger waiting at den, happy to see Tito coming -->
+  <ellipse cx="280" cy="350" rx="32" ry="36" fill="#6A5240"/>
+  <path d="M252,322 Q280,312 308,322 L308,348 Q280,358 252,348Z" fill="#F0E4D0"/>
+  <ellipse cx="266" cy="336" rx="9" ry="14" fill="#4A3826" transform="rotate(-8 266 336)"/>
+  <ellipse cx="294" cy="336" rx="9" ry="14" fill="#4A3826" transform="rotate(8 294 336)"/>
+  <circle cx="254" cy="318" r="11" fill="#6A5240"/>
+  <circle cx="306" cy="318" r="11" fill="#6A5240"/>
+  <ellipse cx="272" cy="334" rx="4.5" ry="5" fill="#1A1006"/>
+  <ellipse cx="288" cy="334" rx="4.5" ry="5" fill="#1A1006"/>
+  <path d="M270 348 Q280 354 290 348" stroke="#3A2A18" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- Tito approaching, small, happy and tired -->
+  <ellipse cx="130" cy="430" rx="32" ry="36" fill="#5A4A38"/>
+  <path d="M102,402 Q130,393 158,402 L158,428 Q130,438 102,428Z" fill="#E8DCC8"/>
+  <ellipse cx="115" cy="415" rx="8.5" ry="13" fill="#3A2A18" transform="rotate(-8 115 415)"/>
+  <ellipse cx="145" cy="415" rx="8.5" ry="13" fill="#3A2A18" transform="rotate(8 145 415)"/>
+  <circle cx="103" cy="398" r="11" fill="#5A4A38"/>
+  <circle cx="157" cy="398" r="11" fill="#5A4A38"/>
+  <path d="M109 412 Q113 408 117 412" stroke="#1A1006" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <path d="M139 412 Q143 408 147 412" stroke="#1A1006" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <path d="M118 427 Q130 433 142 427" stroke="#3A2A18" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+</svg>
+</div>
+<div class="text-box" style="background:#E8E0F0">
+  <p>De volta à toquinha, Mamãe Texugo já esperava na porta, com um sorriso enorme.</p>
+  <p>— "E então, o que era o barulho?" — ela perguntou.</p>
+</div>
+</div>
+
+<!-- PAGE 14 -->
+<div class="page" id="page-14" style="background:#F0E8D8">
+<div class="illustration" style="height:56%">
+<svg viewBox="0 0 430 520" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="520" fill="#C8A878"/>
+  <rect x="0" y="0" width="430" height="520" fill="#A8845A"/>
+  <ellipse cx="215" cy="280" rx="280" ry="320" fill="#8A6840"/>
+  <!-- cozy den interior, warm light -->
+  <ellipse cx="215" cy="380" rx="140" ry="40" fill="#C08838" opacity="0.5"/>
+  <rect x="60" y="380" width="8" height="20" fill="#C0A878"/>
+  <ellipse cx="64" cy="376" rx="16" ry="12" fill="#FFD060" opacity="0.8"/>
+  <!-- Tito telling the story animatedly to mom -->
+  <ellipse cx="220" cy="350" rx="42" ry="48" fill="#5A4A38"/>
+  <path d="M185,316 Q220,304 255,316 L255,346 Q220,358 185,346Z" fill="#E8DCC8"/>
+  <ellipse cx="202" cy="332" rx="11" ry="18" fill="#3A2A18" transform="rotate(-8 202 332)"/>
+  <ellipse cx="238" cy="332" rx="11" ry="18" fill="#3A2A18" transform="rotate(8 238 332)"/>
+  <circle cx="183" cy="308" r="13" fill="#5A4A38"/>
+  <circle cx="257" cy="308" r="13" fill="#5A4A38"/>
+  <!-- excited wide eyes telling story -->
+  <ellipse cx="207" cy="330" rx="6" ry="7" fill="#1A1006"/>
+  <ellipse cx="233" cy="330" rx="6" ry="7" fill="#1A1006"/>
+  <circle cx="209.5" cy="327.5" r="2.5" fill="#fff"/>
+  <circle cx="235.5" cy="327.5" r="2.5" fill="#fff"/>
+  <path d="M207 343 Q220 351 233 343" stroke="#3A2A18" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+  <circle cx="200" cy="338" r="6.5" fill="#FFB090" opacity="0.5"/>
+  <circle cx="240" cy="338" r="6.5" fill="#FFB090" opacity="0.5"/>
+  <!-- arms gesturing animatedly -->
+  <ellipse cx="178" cy="345" rx="20" ry="9" fill="#5A4A38" transform="rotate(-30 178 345)"/>
+  <ellipse cx="262" cy="340" rx="20" ry="9" fill="#5A4A38" transform="rotate(30 262 340)"/>
+  <!-- mom listening with delight, partial view -->
+  <ellipse cx="330" cy="380" rx="34" ry="40" fill="#6A5240"/>
+  <path d="M300,350 Q330,340 360,350 L360,378 Q330,388 300,378Z" fill="#F0E4D0"/>
+  <ellipse cx="316" cy="366" rx="9" ry="14" fill="#4A3826" transform="rotate(-8 316 366)"/>
+  <ellipse cx="344" cy="366" rx="9" ry="14" fill="#4A3826" transform="rotate(8 344 366)"/>
+  <path d="M312 363 Q316 359 320 363" stroke="#1A1006" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M340 363 Q344 359 348 363" stroke="#1A1006" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M318 378 Q330 385 342 378" stroke="#3A2A18" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>
+</div>
+<div class="text-box" style="background:#F0E8D8">
+  <p>— "Era o Pim! E a Flora! E uma macieira enorme!" — Tito contou tudo, sem parar de sorrir.</p>
+</div>
+</div>
+
+<!-- PAGE 15 -->
+<div class="page" id="page-15" style="background:#FFEED8">
+<div class="illustration" style="height:54%">
+<svg viewBox="0 0 430 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+  <rect width="430" height="500" fill="#E8C8A0"/>
+  <rect x="0" y="0" width="430" height="500" fill="#C8A878"/>
+  <ellipse cx="215" cy="260" rx="280" ry="300" fill="#A88458"/>
+  <!-- cozy bed scene with leaves and moss blanket -->
+  <ellipse cx="215" cy="400" rx="160" ry="50" fill="#C08838" opacity="0.4"/>
+  <!-- mother tucking Tito in -->
+  <ellipse cx="215" cy="330" rx="46" ry="40" fill="#5A4A38"/>
+  <path d="M178,300 Q215,290 252,300 L252,328 Q215,338 178,328Z" fill="#E8DCC8"/>
+  <ellipse cx="198" cy="315" rx="11" ry="17" fill="#3A2A18" transform="rotate(-8 198 315)"/>
+  <ellipse cx="232" cy="315" rx="11" ry="17" fill="#3A2A18" transform="rotate(8 232 315)"/>
+  <circle cx="180" cy="292" r="13" fill="#5A4A38"/>
+  <circle cx="250" cy="292" r="13" fill="#5A4A38"/>
+  <!-- sleepy content eyes -->
+  <path d="M191 313 Q196 309 201 313" stroke="#1A1006" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M229 313 Q234 309 239 313" stroke="#1A1006" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M203 326 Q215 332 227 326" stroke="#3A2A18" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <circle cx="195" cy="320" r="6" fill="#FFB090" opacity="0.5"/>
+  <circle cx="235" cy="320" r="6" fill="#FFB090" opacity="0.5"/>
+  <!-- leaf blanket suggested -->
+  <ellipse cx="215" cy="365" rx="55" ry="20" fill="#7A9840" opacity="0.6"/>
+  <!-- mom's arm tucking in -->
+  <ellipse cx="290" cy="335" rx="20" ry="12" fill="#6A5240" transform="rotate(-15 290 335)"/>
+  <!-- small mushroom light dimmed -->
+  <rect x="330" y="370" width="6" height="16" fill="#C0A878"/>
+  <ellipse cx="333" cy="367" rx="12" ry="9" fill="#FFD060" opacity="0.5"/>
+</svg>
+</div>
+<div class="text-box" style="background:#FFEED8">
+  <p>Mamãe sorriu e ajeitou as folhinhas da caminha de Tito.</p>
+  <p>— "Viu? O medo só parecia grande. A coragem que você teve também era pequena, mas foi suficiente."</p>
+</div>
+</div>
+
+<!-- PAGE 16 -->
+<div class="page" id="page-16">
+<svg viewBox="0 0 430 932" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%">
+  <defs>
+    <radialGradient id="nightBg" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#3A2A14"/>
+      <stop offset="100%" stop-color="#0E0804"/>
+    </radialGradient>
+  </defs>
+  <rect width="430" height="932" fill="url(#nightBg)"/>
+  <!-- gentle fireflies/stars -->
+  <circle cx="40" cy="60" r="1.8" fill="#FFE8A0" opacity="0.8"/>
+  <circle cx="110" cy="35" r="1.2" fill="#FFD080" opacity="0.7"/>
+  <circle cx="200" cy="25" r="2" fill="#FFE8A0" opacity="0.85"/>
+  <circle cx="310" cy="55" r="1.5" fill="#FFD080" opacity="0.7"/>
+  <circle cx="390" cy="40" r="1.8" fill="#FFE8A0" opacity="0.75"/>
+  <circle cx="60" cy="150" r="1.2" fill="#FFD080" opacity="0.6"/>
+  <circle cx="370" cy="130" r="1.5" fill="#FFE8A0" opacity="0.65"/>
+  <circle cx="160" cy="95" r="1" fill="#FFD080" opacity="0.55"/>
+  <!-- soft moon glow -->
+  <circle cx="320" cy="120" r="40" fill="#FFF8D0" opacity="0.7"/>
+  <circle cx="320" cy="120" r="34" fill="#FFFCE0"/>
+  <!-- cozy den scene, Tito asleep peacefully, big and warm -->
+  <ellipse cx="215" cy="280" rx="200" ry="200" fill="#3A2812" opacity="0.6"/>
+  <ellipse cx="215" cy="470" rx="160" ry="40" fill="#5A3E1C" opacity="0.5"/>
+  <!-- Tito curled up sleeping -->
+  <ellipse cx="215" cy="400" rx="70" ry="58" fill="#5A4A38"/>
+  <ellipse cx="215" cy="420" rx="44" ry="34" fill="#E8DCC8"/>
+  <circle cx="160" cy="375" r="20" fill="#5A4A38"/>
+  <circle cx="270" cy="375" r="20" fill="#5A4A38"/>
+  <!-- peaceful closed eyes -->
+  <path d="M195 395 Q204 390 213 395" stroke="#3A2A18" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+  <path d="M217 395 Q226 390 235 395" stroke="#3A2A18" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+  <path d="M205 412 Q215 417 225 412" stroke="#3A2A18" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <!-- curled tail -->
+  <ellipse cx="270" cy="430" rx="26" ry="36" fill="#5A4A38" transform="rotate(35 270 430)"/>
+  <!-- gentle breathing zzz -->
+  <text x="290" y="360" font-size="20" fill="#FFD080" opacity="0.6" font-family="Nunito,sans-serif" font-weight="700">z</text>
+  <text x="305" y="340" font-size="16" fill="#FFD080" opacity="0.5" font-family="Nunito,sans-serif" font-weight="700">z</text>
+  <text x="316" y="323" font-size="12" fill="#FFD080" opacity="0.4" font-family="Nunito,sans-serif" font-weight="700">z</text>
+</svg>
+<div class="text-overlay" style="bottom:60px">
+  <div class="bubble-dark" style="text-align:center">
+    <p>E Tito dormiu sonhando com macieiras, borboletas e amigos novos — sabendo que pequenas coragens podem abrir grandes jardins.</p>
+    <p style="font-family:'Fredoka One',cursive;font-size:clamp(20px,5.5vw,26px);color:#FFD080;margin-top:12px;">Boa noite, pequeno texugo.</p>
+    <p style="font-size:clamp(14px,3.5vw,18px);margin-top:10px;letter-spacing:0.15em;color:rgba(255,208,128,0.5);">🍂 &nbsp; 🍂 &nbsp; 🍂</p>
+  </div>
+</div>
+</div>
+
+<!-- PAGE 17 — FINAL com botão início -->
+<div class="page" id="page-17">
+<svg viewBox="0 0 430 932" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%">
+  <defs>
+    <radialGradient id="bgFinal" cx="50%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#3A2A14"/>
+      <stop offset="100%" stop-color="#0E0804"/>
+    </radialGradient>
+  </defs>
+  <rect width="430" height="932" fill="url(#bgFinal)"/>
+  <circle cx="40" cy="80" r="1.5" fill="#FFD080" opacity="0.7"/>
+  <circle cx="110" cy="50" r="1" fill="#FFE8A0" opacity="0.6"/>
+  <circle cx="200" cy="35" r="1.8" fill="#FFD080" opacity="0.8"/>
+  <circle cx="310" cy="65" r="1.2" fill="#FFE8A0" opacity="0.65"/>
+  <circle cx="395" cy="45" r="1.5" fill="#FFD080" opacity="0.7"/>
+  <circle cx="60" cy="170" r="1" fill="#FFE8A0" opacity="0.5"/>
+  <circle cx="380" cy="155" r="1.5" fill="#FFD080" opacity="0.6"/>
+</svg>
+
+<style>
+@keyframes pulse-cta-tito{
+  0%,100%{box-shadow:0 0 18px 4px rgba(255,208,128,0.5),0 4px 20px rgba(255,208,128,0.4)}
+  50%{box-shadow:0 0 32px 10px rgba(255,208,128,0.75),0 6px 28px rgba(255,208,128,0.6)}
+}
+.cta-btn-tito{animation:pulse-cta-tito 2s ease-in-out infinite}
+</style>
+
+<!-- BOTÃO INÍCIO -->
+<div style="position:absolute;top:14px;left:14px;z-index:20;">
+  <button onclick="showPage(0,-1)" style="
+    font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;
+    color:rgba(200,170,130,0.7);background:rgba(255,255,255,0.07);
+    border:1px solid rgba(200,170,130,0.25);border-radius:50px;
+    padding:6px 12px;cursor:pointer;
+    display:flex;align-items:center;gap:4px;">
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(200,170,130,0.7)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Início
+  </button>
+</div>
+
+<!-- CONTEÚDO -->
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 22px 20px;overflow:hidden;text-align:center;">
+
+  <div style="margin-bottom:18px;">
+    <p style="font-family:'Fredoka One',cursive;font-size:clamp(22px,6vw,28px);color:#FFD080;line-height:1.25;text-shadow:0 2px 14px rgba(120,70,20,0.5);">Tito acabou de<br>encontrar coragem.</p>
+    <p style="font-family:'Nunito',sans-serif;font-size:clamp(15px,4vw,18px);color:#E0D8C8;font-weight:700;margin-top:8px;line-height:1.4;">e amanhã tem mais uma<br><em style="color:#FFD080;font-style:normal;">aventura te esperando.</em></p>
+  </div>
+
+  <!-- Próximo livro -->
+  <a href="https://dormistoria.com.br" target="_blank" style="text-decoration:none;width:100%;display:block;margin-bottom:16px;">
+  <div style="background:rgba(255,208,128,0.08);border:1px solid rgba(255,208,128,0.3);border-radius:16px;padding:16px 18px;">
+    <p style="font-family:'Nunito',sans-serif;font-size:clamp(11px,3vw,13px);color:#FFD080;font-weight:800;margin-bottom:8px;letter-spacing:0.03em;">EM BREVE NA DORMISTÓRIA 🍂</p>
+    <p style="font-family:'Nunito',sans-serif;font-size:clamp(12px,3.2vw,14px);color:rgba(240,232,220,0.75);font-weight:600;line-height:1.5;">Uma nova história chega em breve — fique de olho no WhatsApp ou visite nosso site para não perder.</p>
+  </div>
+  </a>
+
+  <!-- CTA -->
+  <div style="width:100%;">
+    <a href="https://dormistoria.com.br" target="_blank" class="cta-btn-tito" style="
+      display:block;
+      font-family:'Fredoka One',cursive;
+      font-size:clamp(16px,4.5vw,20px);
+      color:#2A1A0A;
+      background:linear-gradient(135deg,#FFE8A0,#FFD080);
+      border-radius:60px;
+      padding:13px 20px;
+      text-decoration:none;
+      text-align:center;
+      letter-spacing:0.02em;
+      margin-bottom:8px;">
+      Conhecer a Dormistória →
+    </a>
+    <p style="font-family:'Nunito',sans-serif;font-size:clamp(10px,2.5vw,12px);color:rgba(200,170,130,0.45);font-weight:600;">Uma história nova todo dia · WhatsApp</p>
+  </div>
+
+</div>
+</div>
+
+</div><!-- /book -->
+</div><!-- /app -->
+
+<!-- NAV ARROWS -->
+<div class="tap-prev" onclick="if(!animating&&current>0)showPage(current-1,-1)" aria-label="Página anterior">
+  <div class="tap-arrow"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
+</div>
+<div class="tap-next" onclick="if(!animating&&current<TOTAL-1)showPage(current+1,1)" aria-label="Próxima página">
+  <div class="tap-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+</div>
+
+<!-- DOTS -->
+<div id="dots"></div>
+
+<script>
+const TOTAL = 18;
+const BOOK_TITLE = 'Tito e o Jardim Secreto';
+
+let current=0,startX=0,startY=0,dragging=false,swipeLocked=false,animating=false;
+
+document.querySelectorAll('.page').forEach((p,i)=>{
+  if(i===0){p.style.visibility='visible';p.style.opacity='1';p.style.transform='translateX(0)';p.style.pointerEvents='all';p.classList.add('active');}
+  else{p.style.visibility='hidden';p.style.opacity='0';p.style.transform='translateX(0)';p.style.pointerEvents='none';p.classList.remove('active');}
+});
+updateDots(); // estado inicial das setas
+
+function getPage(n){return document.getElementById('page-'+n)}
+
+function showPage(n,dir){
+  if(animating||n===current)return;
+  if(n<0||n>=TOTAL)return;
+  const outPage=getPage(current),inPage=getPage(n);
+  if(!outPage||!inPage)return;
+  animating=true;
+  const dur=340;
+  inPage.style.transition='none';
+  inPage.style.visibility='visible';
+  inPage.style.opacity='1';
+  inPage.style.transform=dir>0?'translateX(100%)':'translateX(-100%)';
+  inPage.style.pointerEvents='none';
+  inPage.getBoundingClientRect();
+  const t=`transform ${dur}ms cubic-bezier(0.4,0,0.2,1)`;
+  outPage.style.transition=t;inPage.style.transition=t;
+  outPage.style.transform=dir>0?'translateX(-100%)':'translateX(100%)';
+  inPage.style.transform='translateX(0)';
+  setTimeout(()=>{
+    outPage.style.transition='none';outPage.style.transform='translateX(0)';
+    outPage.style.visibility='hidden';outPage.style.opacity='0';outPage.style.pointerEvents='none';
+    outPage.classList.remove('active');
+    inPage.style.transition='none';inPage.style.transform='translateX(0)';
+    inPage.style.visibility='visible';inPage.style.opacity='1';inPage.style.pointerEvents='all';
+    inPage.classList.add('active');
+    current=n;animating=false;updateDots();
+  },dur+20);
+}
+
+function updateDots(){
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+  const tapPrev = document.querySelector('.tap-prev');
+  const tapNext = document.querySelector('.tap-next');
+  tapPrev.style.display = current === 0 ? 'none' : 'flex';
+  tapNext.style.display = current === TOTAL-1 ? 'none' : 'flex';
+}
+
+const dotContainer=document.getElementById('dots');
+for(let i=0;i<TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');dotContainer.appendChild(d);}
+
+const book=document.getElementById('book');
+book.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;startY=e.touches[0].clientY;dragging=true;swipeLocked=false;},{passive:true});
+book.addEventListener('touchmove',e=>{if(!dragging)return;const dx=e.touches[0].clientX-startX,dy=e.touches[0].clientY-startY;if(!swipeLocked&&Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>10){swipeLocked=true;e.preventDefault();}},{passive:false});
+book.addEventListener('touchend',e=>{if(!dragging)return;const dx=e.changedTouches[0].clientX-startX,dy=e.changedTouches[0].clientY-startY;if(!animating&&Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.2){if(dx<0&&current<TOTAL-1)showPage(current+1,1);else if(dx>0&&current>0)showPage(current-1,-1);}dragging=false;swipeLocked=false;},{passive:true});
+book.addEventListener('mousedown',e=>{startX=e.clientX;dragging=true;});
+book.addEventListener('mouseup',e=>{if(!dragging)return;const dx=e.clientX-startX;if(!animating&&Math.abs(dx)>50){if(dx<0&&current<TOTAL-1)showPage(current+1,1);else if(dx>0&&current>0)showPage(current-1,-1);}dragging=false;});
+document.addEventListener('keydown',e=>{if(animating)return;if(e.key==='ArrowRight'&&current<TOTAL-1)showPage(current+1,1);if(e.key==='ArrowLeft'&&current>0)showPage(current-1,-1);});
+</script>
+</body>
+</html>
